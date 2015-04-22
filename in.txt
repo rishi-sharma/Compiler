@@ -1,0 +1,28 @@
+int i=11;
+int gcd(int a,b)
+{
+	if(a==0)
+	{
+		return b;
+	}
+	int temp=-(b/a)*a;
+	return gcd(b+temp,a);
+}
+bool main()
+{
+	print i;
+	int a,b;
+	int i=10;
+	while(i>0)
+	{
+		read a;
+		read b;
+		int k=gcd(a,b);
+		print k;
+		i -= 1;
+	}
+	if(i==0){
+		return true;}
+	else{
+		return false;}
+}

@@ -1,0 +1,1924 @@
+Terminals unused in grammar
+
+   UNKNOWN
+   VOID
+
+
+Grammar
+
+    0 $accept: CODE $end
+
+    1 CODE: DECLARATIONS
+
+    2 DECLARATIONS: DECLARATIONS DECLARATION
+    3             | DECLARATION
+
+    4 DECLARATION: VARIABLE_DEFINITION
+    5            | FUNCTION_DEFINITION
+    6            | error DELIMITER
+
+    7 VARIABLE_DEFINITION: TYPE VARIABLES DELIMITER
+    8                    | TYPE error
+
+    9 VARIABLES: VARIABLES COMMA VARIABLE_INITIALIZE
+   10          | VARIABLE_INITIALIZE
+
+   11 VARIABLE_INITIALIZE: IDENTIFIER
+   12                    | IDENTIFIER ASSIGN SIMPLE_EXPRESSION
+
+   13 TYPE: INT
+   14     | BOOL
+
+   15 $@1: /* empty */
+
+   16 $@2: /* empty */
+
+   17 FUNCTION_DEFINITION: TYPE IDENTIFIER LEFTPAR $@1 PARAMS RIGHTPAR LEFTBRACE STATEMENT_LIST RIGHTBRACE $@2
+
+   18 STATEMENT_LIST: STATEMENTS
+   19               | /* empty */
+
+   20 PARAMS: PARAMETERS
+   21       | /* empty */
+
+   22 PARAMETERS: PARAMETERS DELIMITER PARAMETER
+   23           | PARAMETER
+
+   24 PARAMETER: TYPE PARAMETER_IDS
+
+   25 PARAMETER_IDS: PARAMETER_IDS COMMA IDENTIFIER
+   26              | IDENTIFIER
+
+   27 STATEMENT: VARIABLE_DEFINITION
+   28          | EXP
+   29          | CONDITIONAL
+   30          | LOOP
+   31          | PRINT_STATEMENT
+   32          | READ_STATEMENT
+   33          | RETURN_STATEMENT
+
+   34 STATEMENTS: STATEMENT STATEMENTS
+
+   35 $@3: /* empty */
+
+   36 STATEMENTS: leftbrace STATEMENT_LIST RIGHTBRACE $@3 STATEMENTS
+   37           | STATEMENT
+
+   38 PRINT_STATEMENT: PRINT IDENTIFIER
+   39                | PRINT LITERALS
+
+   40 READ_STATEMENT: READ IDENTIFIER
+
+   41 EXP: EXPRESSION DELIMITER
+   42    | DELIMITER
+
+   43 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE
+
+   44 $@4: /* empty */
+
+   45 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE $@4 ELSE leftbrace STATEMENT_LIST RIGHTBRACE
+
+   46 LOOP: WHILE LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE
+
+   47 RETURN_STATEMENT: RETURN DELIMITER
+   48                 | RETURN EXPRESSION DELIMITER
+
+   49 EXPRESSION: IDENTIFIER ASSIGN EXPRESSION
+   50           | IDENTIFIER SUM_ASSIGN EXPRESSION
+   51           | IDENTIFIER SUB_ASSIGN EXPRESSION
+   52           | SIMPLE_EXPRESSION
+
+   53 SIMPLE_EXPRESSION: SUM RELATIONAL_OPERATORS SUM
+   54                  | SUM
+
+   55 RELATIONAL_OPERATORS: LTE
+   56                     | LT
+   57                     | GT
+   58                     | GTE
+   59                     | EQ
+   60                     | NEQ
+
+   61 SUM: SUM ARITHMETIC_OPERATORS TERM
+   62    | TERM
+
+   63 ARITHMETIC_OPERATORS: PLUS
+   64                     | MINUS
+
+   65 TERM: TERM MUL_DIV_OPERATORS UNARY_EXPRESSION
+   66     | UNARY_EXPRESSION
+
+   67 MUL_DIV_OPERATORS: MULTIPLY
+   68                  | DIVISION
+
+   69 UNARY_EXPRESSION: UNARY_OPERATOR UNARY_EXPRESSION
+   70                 | FACTOR
+
+   71 UNARY_OPERATOR: MINUS
+
+   72 FACTOR: L_VALUE
+   73       | IDENTIFIER
+
+   74 L_VALUE: LEFTPAR EXPRESSION RIGHTPAR
+   75        | FUNCTION_CALL
+   76        | LITERALS
+
+   77 $@5: /* empty */
+
+   78 FUNCTION_CALL: IDENTIFIER LEFTPAR $@5 ARGUMENT RIGHTPAR
+
+   79 ARGUMENT: ARGUMENTS
+   80         | /* empty */
+
+   81 ARGUMENTS: ARGUMENTS COMMA EXPRESSION
+   82          | EXPRESSION
+
+   83 LITERALS: INTEGERS
+   84         | TRUE
+   85         | FALSE
+
+   86 IDENTIFIER: id
+
+   87 INTEGERS: integer
+
+   88 leftbrace: LEFTBRACE
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256) 6 8
+IF (258) 43 45
+ELSE (259) 45
+WHILE (260) 46
+RETURN (261) 47 48
+INT (262) 13
+BOOL (263) 14
+FALSE (264) 85
+TRUE (265) 84
+EQ (266) 59
+NEQ (267) 60
+LT (268) 56
+LTE (269) 55
+GT (270) 57
+GTE (271) 58
+LEFTPAR (272) 17 43 45 46 74 78
+RIGHTPAR (273) 17 43 45 46 74 78
+LEFTBRACE (274) 17 88
+RIGHTBRACE (275) 17 36 43 45 46
+DELIMITER (276) 6 7 22 41 42 47 48
+UNKNOWN (277)
+VOID (278)
+COMMA (279) 9 25 81
+integer (280) 87
+id (281) 86
+PRINT (282) 38 39
+READ (283) 40
+PLUS (284) 63
+MINUS (285) 64 71
+SUB_ASSIGN (286) 51
+SUM_ASSIGN (287) 50
+ASSIGN (288) 12 49
+DIVISION (289) 68
+MULTIPLY (290) 67
+
+
+Nonterminals, with rules where they appear
+
+$accept (36)
+    on left: 0
+CODE (37)
+    on left: 1, on right: 0
+DECLARATIONS (38)
+    on left: 2 3, on right: 1 2
+DECLARATION (39)
+    on left: 4 5 6, on right: 2 3
+VARIABLE_DEFINITION (40)
+    on left: 7 8, on right: 4 27
+VARIABLES (41)
+    on left: 9 10, on right: 7 9
+VARIABLE_INITIALIZE (42)
+    on left: 11 12, on right: 9 10
+TYPE (43)
+    on left: 13 14, on right: 7 8 17 24
+FUNCTION_DEFINITION (44)
+    on left: 17, on right: 5
+$@1 (45)
+    on left: 15, on right: 17
+$@2 (46)
+    on left: 16, on right: 17
+STATEMENT_LIST (47)
+    on left: 18 19, on right: 17 36 43 45 46
+PARAMS (48)
+    on left: 20 21, on right: 17
+PARAMETERS (49)
+    on left: 22 23, on right: 20 22
+PARAMETER (50)
+    on left: 24, on right: 22 23
+PARAMETER_IDS (51)
+    on left: 25 26, on right: 24 25
+STATEMENT (52)
+    on left: 27 28 29 30 31 32 33, on right: 34 37
+STATEMENTS (53)
+    on left: 34 36 37, on right: 18 34 36
+$@3 (54)
+    on left: 35, on right: 36
+PRINT_STATEMENT (55)
+    on left: 38 39, on right: 31
+READ_STATEMENT (56)
+    on left: 40, on right: 32
+EXP (57)
+    on left: 41 42, on right: 28
+CONDITIONAL (58)
+    on left: 43 45, on right: 29
+$@4 (59)
+    on left: 44, on right: 45
+LOOP (60)
+    on left: 46, on right: 30
+RETURN_STATEMENT (61)
+    on left: 47 48, on right: 33
+EXPRESSION (62)
+    on left: 49 50 51 52, on right: 41 48 49 50 51 74 81 82
+SIMPLE_EXPRESSION (63)
+    on left: 53 54, on right: 12 43 45 46 52
+RELATIONAL_OPERATORS (64)
+    on left: 55 56 57 58 59 60, on right: 53
+SUM (65)
+    on left: 61 62, on right: 53 54 61
+ARITHMETIC_OPERATORS (66)
+    on left: 63 64, on right: 61
+TERM (67)
+    on left: 65 66, on right: 61 62 65
+MUL_DIV_OPERATORS (68)
+    on left: 67 68, on right: 65
+UNARY_EXPRESSION (69)
+    on left: 69 70, on right: 65 66 69
+UNARY_OPERATOR (70)
+    on left: 71, on right: 69
+FACTOR (71)
+    on left: 72 73, on right: 70
+L_VALUE (72)
+    on left: 74 75 76, on right: 72
+FUNCTION_CALL (73)
+    on left: 78, on right: 75
+$@5 (74)
+    on left: 77, on right: 78
+ARGUMENT (75)
+    on left: 79 80, on right: 78
+ARGUMENTS (76)
+    on left: 81 82, on right: 79 81
+LITERALS (77)
+    on left: 83 84 85, on right: 39 76
+IDENTIFIER (78)
+    on left: 86, on right: 11 12 17 25 26 38 40 49 50 51 73 78
+INTEGERS (79)
+    on left: 87, on right: 83
+leftbrace (80)
+    on left: 88, on right: 36 43 45 46
+
+
+State 0
+
+    0 $accept: . CODE $end
+
+    error  shift, and go to state 1
+    INT    shift, and go to state 2
+    BOOL   shift, and go to state 3
+
+    CODE                 go to state 4
+    DECLARATIONS         go to state 5
+    DECLARATION          go to state 6
+    VARIABLE_DEFINITION  go to state 7
+    TYPE                 go to state 8
+    FUNCTION_DEFINITION  go to state 9
+
+
+State 1
+
+    6 DECLARATION: error . DELIMITER
+
+    DELIMITER  shift, and go to state 10
+
+
+State 2
+
+   13 TYPE: INT .
+
+    $default  reduce using rule 13 (TYPE)
+
+
+State 3
+
+   14 TYPE: BOOL .
+
+    $default  reduce using rule 14 (TYPE)
+
+
+State 4
+
+    0 $accept: CODE . $end
+
+    $end  shift, and go to state 11
+
+
+State 5
+
+    1 CODE: DECLARATIONS .
+    2 DECLARATIONS: DECLARATIONS . DECLARATION
+
+    error  shift, and go to state 1
+    INT    shift, and go to state 2
+    BOOL   shift, and go to state 3
+
+    $end  reduce using rule 1 (CODE)
+
+    DECLARATION          go to state 12
+    VARIABLE_DEFINITION  go to state 7
+    TYPE                 go to state 8
+    FUNCTION_DEFINITION  go to state 9
+
+
+State 6
+
+    3 DECLARATIONS: DECLARATION .
+
+    $default  reduce using rule 3 (DECLARATIONS)
+
+
+State 7
+
+    4 DECLARATION: VARIABLE_DEFINITION .
+
+    $default  reduce using rule 4 (DECLARATION)
+
+
+State 8
+
+    7 VARIABLE_DEFINITION: TYPE . VARIABLES DELIMITER
+    8                    | TYPE . error
+   17 FUNCTION_DEFINITION: TYPE . IDENTIFIER LEFTPAR $@1 PARAMS RIGHTPAR LEFTBRACE STATEMENT_LIST RIGHTBRACE $@2
+
+    error  shift, and go to state 13
+    id     shift, and go to state 14
+
+    VARIABLES            go to state 15
+    VARIABLE_INITIALIZE  go to state 16
+    IDENTIFIER           go to state 17
+
+
+State 9
+
+    5 DECLARATION: FUNCTION_DEFINITION .
+
+    $default  reduce using rule 5 (DECLARATION)
+
+
+State 10
+
+    6 DECLARATION: error DELIMITER .
+
+    $default  reduce using rule 6 (DECLARATION)
+
+
+State 11
+
+    0 $accept: CODE $end .
+
+    $default  accept
+
+
+State 12
+
+    2 DECLARATIONS: DECLARATIONS DECLARATION .
+
+    $default  reduce using rule 2 (DECLARATIONS)
+
+
+State 13
+
+    8 VARIABLE_DEFINITION: TYPE error .
+
+    $default  reduce using rule 8 (VARIABLE_DEFINITION)
+
+
+State 14
+
+   86 IDENTIFIER: id .
+
+    $default  reduce using rule 86 (IDENTIFIER)
+
+
+State 15
+
+    7 VARIABLE_DEFINITION: TYPE VARIABLES . DELIMITER
+    9 VARIABLES: VARIABLES . COMMA VARIABLE_INITIALIZE
+
+    DELIMITER  shift, and go to state 18
+    COMMA      shift, and go to state 19
+
+
+State 16
+
+   10 VARIABLES: VARIABLE_INITIALIZE .
+
+    $default  reduce using rule 10 (VARIABLES)
+
+
+State 17
+
+   11 VARIABLE_INITIALIZE: IDENTIFIER .
+   12                    | IDENTIFIER . ASSIGN SIMPLE_EXPRESSION
+   17 FUNCTION_DEFINITION: TYPE IDENTIFIER . LEFTPAR $@1 PARAMS RIGHTPAR LEFTBRACE STATEMENT_LIST RIGHTBRACE $@2
+
+    LEFTPAR  shift, and go to state 20
+    ASSIGN   shift, and go to state 21
+
+    $default  reduce using rule 11 (VARIABLE_INITIALIZE)
+
+
+State 18
+
+    7 VARIABLE_DEFINITION: TYPE VARIABLES DELIMITER .
+
+    $default  reduce using rule 7 (VARIABLE_DEFINITION)
+
+
+State 19
+
+    9 VARIABLES: VARIABLES COMMA . VARIABLE_INITIALIZE
+
+    id  shift, and go to state 14
+
+    VARIABLE_INITIALIZE  go to state 22
+    IDENTIFIER           go to state 23
+
+
+State 20
+
+   17 FUNCTION_DEFINITION: TYPE IDENTIFIER LEFTPAR . $@1 PARAMS RIGHTPAR LEFTBRACE STATEMENT_LIST RIGHTBRACE $@2
+
+    $default  reduce using rule 15 ($@1)
+
+    $@1  go to state 24
+
+
+State 21
+
+   12 VARIABLE_INITIALIZE: IDENTIFIER ASSIGN . SIMPLE_EXPRESSION
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    SIMPLE_EXPRESSION  go to state 30
+    SUM                go to state 31
+    TERM               go to state 32
+    UNARY_EXPRESSION   go to state 33
+    UNARY_OPERATOR     go to state 34
+    FACTOR             go to state 35
+    L_VALUE            go to state 36
+    FUNCTION_CALL      go to state 37
+    LITERALS           go to state 38
+    IDENTIFIER         go to state 39
+    INTEGERS           go to state 40
+
+
+State 22
+
+    9 VARIABLES: VARIABLES COMMA VARIABLE_INITIALIZE .
+
+    $default  reduce using rule 9 (VARIABLES)
+
+
+State 23
+
+   11 VARIABLE_INITIALIZE: IDENTIFIER .
+   12                    | IDENTIFIER . ASSIGN SIMPLE_EXPRESSION
+
+    ASSIGN  shift, and go to state 21
+
+    $default  reduce using rule 11 (VARIABLE_INITIALIZE)
+
+
+State 24
+
+   17 FUNCTION_DEFINITION: TYPE IDENTIFIER LEFTPAR $@1 . PARAMS RIGHTPAR LEFTBRACE STATEMENT_LIST RIGHTBRACE $@2
+
+    INT   shift, and go to state 2
+    BOOL  shift, and go to state 3
+
+    $default  reduce using rule 21 (PARAMS)
+
+    TYPE        go to state 41
+    PARAMS      go to state 42
+    PARAMETERS  go to state 43
+    PARAMETER   go to state 44
+
+
+State 25
+
+   85 LITERALS: FALSE .
+
+    $default  reduce using rule 85 (LITERALS)
+
+
+State 26
+
+   84 LITERALS: TRUE .
+
+    $default  reduce using rule 84 (LITERALS)
+
+
+State 27
+
+   74 L_VALUE: LEFTPAR . EXPRESSION RIGHTPAR
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    EXPRESSION         go to state 45
+    SIMPLE_EXPRESSION  go to state 46
+    SUM                go to state 31
+    TERM               go to state 32
+    UNARY_EXPRESSION   go to state 33
+    UNARY_OPERATOR     go to state 34
+    FACTOR             go to state 35
+    L_VALUE            go to state 36
+    FUNCTION_CALL      go to state 37
+    LITERALS           go to state 38
+    IDENTIFIER         go to state 47
+    INTEGERS           go to state 40
+
+
+State 28
+
+   87 INTEGERS: integer .
+
+    $default  reduce using rule 87 (INTEGERS)
+
+
+State 29
+
+   71 UNARY_OPERATOR: MINUS .
+
+    $default  reduce using rule 71 (UNARY_OPERATOR)
+
+
+State 30
+
+   12 VARIABLE_INITIALIZE: IDENTIFIER ASSIGN SIMPLE_EXPRESSION .
+
+    $default  reduce using rule 12 (VARIABLE_INITIALIZE)
+
+
+State 31
+
+   53 SIMPLE_EXPRESSION: SUM . RELATIONAL_OPERATORS SUM
+   54                  | SUM .
+   61 SUM: SUM . ARITHMETIC_OPERATORS TERM
+
+    EQ     shift, and go to state 48
+    NEQ    shift, and go to state 49
+    LT     shift, and go to state 50
+    LTE    shift, and go to state 51
+    GT     shift, and go to state 52
+    GTE    shift, and go to state 53
+    PLUS   shift, and go to state 54
+    MINUS  shift, and go to state 55
+
+    $default  reduce using rule 54 (SIMPLE_EXPRESSION)
+
+    RELATIONAL_OPERATORS  go to state 56
+    ARITHMETIC_OPERATORS  go to state 57
+
+
+State 32
+
+   62 SUM: TERM .
+   65 TERM: TERM . MUL_DIV_OPERATORS UNARY_EXPRESSION
+
+    DIVISION  shift, and go to state 58
+    MULTIPLY  shift, and go to state 59
+
+    $default  reduce using rule 62 (SUM)
+
+    MUL_DIV_OPERATORS  go to state 60
+
+
+State 33
+
+   66 TERM: UNARY_EXPRESSION .
+
+    $default  reduce using rule 66 (TERM)
+
+
+State 34
+
+   69 UNARY_EXPRESSION: UNARY_OPERATOR . UNARY_EXPRESSION
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    UNARY_EXPRESSION  go to state 61
+    UNARY_OPERATOR    go to state 34
+    FACTOR            go to state 35
+    L_VALUE           go to state 36
+    FUNCTION_CALL     go to state 37
+    LITERALS          go to state 38
+    IDENTIFIER        go to state 39
+    INTEGERS          go to state 40
+
+
+State 35
+
+   70 UNARY_EXPRESSION: FACTOR .
+
+    $default  reduce using rule 70 (UNARY_EXPRESSION)
+
+
+State 36
+
+   72 FACTOR: L_VALUE .
+
+    $default  reduce using rule 72 (FACTOR)
+
+
+State 37
+
+   75 L_VALUE: FUNCTION_CALL .
+
+    $default  reduce using rule 75 (L_VALUE)
+
+
+State 38
+
+   76 L_VALUE: LITERALS .
+
+    $default  reduce using rule 76 (L_VALUE)
+
+
+State 39
+
+   73 FACTOR: IDENTIFIER .
+   78 FUNCTION_CALL: IDENTIFIER . LEFTPAR $@5 ARGUMENT RIGHTPAR
+
+    LEFTPAR  shift, and go to state 62
+
+    $default  reduce using rule 73 (FACTOR)
+
+
+State 40
+
+   83 LITERALS: INTEGERS .
+
+    $default  reduce using rule 83 (LITERALS)
+
+
+State 41
+
+   24 PARAMETER: TYPE . PARAMETER_IDS
+
+    id  shift, and go to state 14
+
+    PARAMETER_IDS  go to state 63
+    IDENTIFIER     go to state 64
+
+
+State 42
+
+   17 FUNCTION_DEFINITION: TYPE IDENTIFIER LEFTPAR $@1 PARAMS . RIGHTPAR LEFTBRACE STATEMENT_LIST RIGHTBRACE $@2
+
+    RIGHTPAR  shift, and go to state 65
+
+
+State 43
+
+   20 PARAMS: PARAMETERS .
+   22 PARAMETERS: PARAMETERS . DELIMITER PARAMETER
+
+    DELIMITER  shift, and go to state 66
+
+    $default  reduce using rule 20 (PARAMS)
+
+
+State 44
+
+   23 PARAMETERS: PARAMETER .
+
+    $default  reduce using rule 23 (PARAMETERS)
+
+
+State 45
+
+   74 L_VALUE: LEFTPAR EXPRESSION . RIGHTPAR
+
+    RIGHTPAR  shift, and go to state 67
+
+
+State 46
+
+   52 EXPRESSION: SIMPLE_EXPRESSION .
+
+    $default  reduce using rule 52 (EXPRESSION)
+
+
+State 47
+
+   49 EXPRESSION: IDENTIFIER . ASSIGN EXPRESSION
+   50           | IDENTIFIER . SUM_ASSIGN EXPRESSION
+   51           | IDENTIFIER . SUB_ASSIGN EXPRESSION
+   73 FACTOR: IDENTIFIER .
+   78 FUNCTION_CALL: IDENTIFIER . LEFTPAR $@5 ARGUMENT RIGHTPAR
+
+    LEFTPAR     shift, and go to state 62
+    SUB_ASSIGN  shift, and go to state 68
+    SUM_ASSIGN  shift, and go to state 69
+    ASSIGN      shift, and go to state 70
+
+    $default  reduce using rule 73 (FACTOR)
+
+
+State 48
+
+   59 RELATIONAL_OPERATORS: EQ .
+
+    $default  reduce using rule 59 (RELATIONAL_OPERATORS)
+
+
+State 49
+
+   60 RELATIONAL_OPERATORS: NEQ .
+
+    $default  reduce using rule 60 (RELATIONAL_OPERATORS)
+
+
+State 50
+
+   56 RELATIONAL_OPERATORS: LT .
+
+    $default  reduce using rule 56 (RELATIONAL_OPERATORS)
+
+
+State 51
+
+   55 RELATIONAL_OPERATORS: LTE .
+
+    $default  reduce using rule 55 (RELATIONAL_OPERATORS)
+
+
+State 52
+
+   57 RELATIONAL_OPERATORS: GT .
+
+    $default  reduce using rule 57 (RELATIONAL_OPERATORS)
+
+
+State 53
+
+   58 RELATIONAL_OPERATORS: GTE .
+
+    $default  reduce using rule 58 (RELATIONAL_OPERATORS)
+
+
+State 54
+
+   63 ARITHMETIC_OPERATORS: PLUS .
+
+    $default  reduce using rule 63 (ARITHMETIC_OPERATORS)
+
+
+State 55
+
+   64 ARITHMETIC_OPERATORS: MINUS .
+
+    $default  reduce using rule 64 (ARITHMETIC_OPERATORS)
+
+
+State 56
+
+   53 SIMPLE_EXPRESSION: SUM RELATIONAL_OPERATORS . SUM
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    SUM               go to state 71
+    TERM              go to state 32
+    UNARY_EXPRESSION  go to state 33
+    UNARY_OPERATOR    go to state 34
+    FACTOR            go to state 35
+    L_VALUE           go to state 36
+    FUNCTION_CALL     go to state 37
+    LITERALS          go to state 38
+    IDENTIFIER        go to state 39
+    INTEGERS          go to state 40
+
+
+State 57
+
+   61 SUM: SUM ARITHMETIC_OPERATORS . TERM
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    TERM              go to state 72
+    UNARY_EXPRESSION  go to state 33
+    UNARY_OPERATOR    go to state 34
+    FACTOR            go to state 35
+    L_VALUE           go to state 36
+    FUNCTION_CALL     go to state 37
+    LITERALS          go to state 38
+    IDENTIFIER        go to state 39
+    INTEGERS          go to state 40
+
+
+State 58
+
+   68 MUL_DIV_OPERATORS: DIVISION .
+
+    $default  reduce using rule 68 (MUL_DIV_OPERATORS)
+
+
+State 59
+
+   67 MUL_DIV_OPERATORS: MULTIPLY .
+
+    $default  reduce using rule 67 (MUL_DIV_OPERATORS)
+
+
+State 60
+
+   65 TERM: TERM MUL_DIV_OPERATORS . UNARY_EXPRESSION
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    UNARY_EXPRESSION  go to state 73
+    UNARY_OPERATOR    go to state 34
+    FACTOR            go to state 35
+    L_VALUE           go to state 36
+    FUNCTION_CALL     go to state 37
+    LITERALS          go to state 38
+    IDENTIFIER        go to state 39
+    INTEGERS          go to state 40
+
+
+State 61
+
+   69 UNARY_EXPRESSION: UNARY_OPERATOR UNARY_EXPRESSION .
+
+    $default  reduce using rule 69 (UNARY_EXPRESSION)
+
+
+State 62
+
+   78 FUNCTION_CALL: IDENTIFIER LEFTPAR . $@5 ARGUMENT RIGHTPAR
+
+    $default  reduce using rule 77 ($@5)
+
+    $@5  go to state 74
+
+
+State 63
+
+   24 PARAMETER: TYPE PARAMETER_IDS .
+   25 PARAMETER_IDS: PARAMETER_IDS . COMMA IDENTIFIER
+
+    COMMA  shift, and go to state 75
+
+    $default  reduce using rule 24 (PARAMETER)
+
+
+State 64
+
+   26 PARAMETER_IDS: IDENTIFIER .
+
+    $default  reduce using rule 26 (PARAMETER_IDS)
+
+
+State 65
+
+   17 FUNCTION_DEFINITION: TYPE IDENTIFIER LEFTPAR $@1 PARAMS RIGHTPAR . LEFTBRACE STATEMENT_LIST RIGHTBRACE $@2
+
+    LEFTBRACE  shift, and go to state 76
+
+
+State 66
+
+   22 PARAMETERS: PARAMETERS DELIMITER . PARAMETER
+
+    INT   shift, and go to state 2
+    BOOL  shift, and go to state 3
+
+    TYPE       go to state 41
+    PARAMETER  go to state 77
+
+
+State 67
+
+   74 L_VALUE: LEFTPAR EXPRESSION RIGHTPAR .
+
+    $default  reduce using rule 74 (L_VALUE)
+
+
+State 68
+
+   51 EXPRESSION: IDENTIFIER SUB_ASSIGN . EXPRESSION
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    EXPRESSION         go to state 78
+    SIMPLE_EXPRESSION  go to state 46
+    SUM                go to state 31
+    TERM               go to state 32
+    UNARY_EXPRESSION   go to state 33
+    UNARY_OPERATOR     go to state 34
+    FACTOR             go to state 35
+    L_VALUE            go to state 36
+    FUNCTION_CALL      go to state 37
+    LITERALS           go to state 38
+    IDENTIFIER         go to state 47
+    INTEGERS           go to state 40
+
+
+State 69
+
+   50 EXPRESSION: IDENTIFIER SUM_ASSIGN . EXPRESSION
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    EXPRESSION         go to state 79
+    SIMPLE_EXPRESSION  go to state 46
+    SUM                go to state 31
+    TERM               go to state 32
+    UNARY_EXPRESSION   go to state 33
+    UNARY_OPERATOR     go to state 34
+    FACTOR             go to state 35
+    L_VALUE            go to state 36
+    FUNCTION_CALL      go to state 37
+    LITERALS           go to state 38
+    IDENTIFIER         go to state 47
+    INTEGERS           go to state 40
+
+
+State 70
+
+   49 EXPRESSION: IDENTIFIER ASSIGN . EXPRESSION
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    EXPRESSION         go to state 80
+    SIMPLE_EXPRESSION  go to state 46
+    SUM                go to state 31
+    TERM               go to state 32
+    UNARY_EXPRESSION   go to state 33
+    UNARY_OPERATOR     go to state 34
+    FACTOR             go to state 35
+    L_VALUE            go to state 36
+    FUNCTION_CALL      go to state 37
+    LITERALS           go to state 38
+    IDENTIFIER         go to state 47
+    INTEGERS           go to state 40
+
+
+State 71
+
+   53 SIMPLE_EXPRESSION: SUM RELATIONAL_OPERATORS SUM .
+   61 SUM: SUM . ARITHMETIC_OPERATORS TERM
+
+    PLUS   shift, and go to state 54
+    MINUS  shift, and go to state 55
+
+    $default  reduce using rule 53 (SIMPLE_EXPRESSION)
+
+    ARITHMETIC_OPERATORS  go to state 57
+
+
+State 72
+
+   61 SUM: SUM ARITHMETIC_OPERATORS TERM .
+   65 TERM: TERM . MUL_DIV_OPERATORS UNARY_EXPRESSION
+
+    DIVISION  shift, and go to state 58
+    MULTIPLY  shift, and go to state 59
+
+    $default  reduce using rule 61 (SUM)
+
+    MUL_DIV_OPERATORS  go to state 60
+
+
+State 73
+
+   65 TERM: TERM MUL_DIV_OPERATORS UNARY_EXPRESSION .
+
+    $default  reduce using rule 65 (TERM)
+
+
+State 74
+
+   78 FUNCTION_CALL: IDENTIFIER LEFTPAR $@5 . ARGUMENT RIGHTPAR
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    $default  reduce using rule 80 (ARGUMENT)
+
+    EXPRESSION         go to state 81
+    SIMPLE_EXPRESSION  go to state 46
+    SUM                go to state 31
+    TERM               go to state 32
+    UNARY_EXPRESSION   go to state 33
+    UNARY_OPERATOR     go to state 34
+    FACTOR             go to state 35
+    L_VALUE            go to state 36
+    FUNCTION_CALL      go to state 37
+    ARGUMENT           go to state 82
+    ARGUMENTS          go to state 83
+    LITERALS           go to state 38
+    IDENTIFIER         go to state 47
+    INTEGERS           go to state 40
+
+
+State 75
+
+   25 PARAMETER_IDS: PARAMETER_IDS COMMA . IDENTIFIER
+
+    id  shift, and go to state 14
+
+    IDENTIFIER  go to state 84
+
+
+State 76
+
+   17 FUNCTION_DEFINITION: TYPE IDENTIFIER LEFTPAR $@1 PARAMS RIGHTPAR LEFTBRACE . STATEMENT_LIST RIGHTBRACE $@2
+
+    IF         shift, and go to state 85
+    WHILE      shift, and go to state 86
+    RETURN     shift, and go to state 87
+    INT        shift, and go to state 2
+    BOOL       shift, and go to state 3
+    FALSE      shift, and go to state 25
+    TRUE       shift, and go to state 26
+    LEFTPAR    shift, and go to state 27
+    LEFTBRACE  shift, and go to state 88
+    DELIMITER  shift, and go to state 89
+    integer    shift, and go to state 28
+    id         shift, and go to state 14
+    PRINT      shift, and go to state 90
+    READ       shift, and go to state 91
+    MINUS      shift, and go to state 29
+
+    $default  reduce using rule 19 (STATEMENT_LIST)
+
+    VARIABLE_DEFINITION  go to state 92
+    TYPE                 go to state 93
+    STATEMENT_LIST       go to state 94
+    STATEMENT            go to state 95
+    STATEMENTS           go to state 96
+    PRINT_STATEMENT      go to state 97
+    READ_STATEMENT       go to state 98
+    EXP                  go to state 99
+    CONDITIONAL          go to state 100
+    LOOP                 go to state 101
+    RETURN_STATEMENT     go to state 102
+    EXPRESSION           go to state 103
+    SIMPLE_EXPRESSION    go to state 46
+    SUM                  go to state 31
+    TERM                 go to state 32
+    UNARY_EXPRESSION     go to state 33
+    UNARY_OPERATOR       go to state 34
+    FACTOR               go to state 35
+    L_VALUE              go to state 36
+    FUNCTION_CALL        go to state 37
+    LITERALS             go to state 38
+    IDENTIFIER           go to state 47
+    INTEGERS             go to state 40
+    leftbrace            go to state 104
+
+
+State 77
+
+   22 PARAMETERS: PARAMETERS DELIMITER PARAMETER .
+
+    $default  reduce using rule 22 (PARAMETERS)
+
+
+State 78
+
+   51 EXPRESSION: IDENTIFIER SUB_ASSIGN EXPRESSION .
+
+    $default  reduce using rule 51 (EXPRESSION)
+
+
+State 79
+
+   50 EXPRESSION: IDENTIFIER SUM_ASSIGN EXPRESSION .
+
+    $default  reduce using rule 50 (EXPRESSION)
+
+
+State 80
+
+   49 EXPRESSION: IDENTIFIER ASSIGN EXPRESSION .
+
+    $default  reduce using rule 49 (EXPRESSION)
+
+
+State 81
+
+   82 ARGUMENTS: EXPRESSION .
+
+    $default  reduce using rule 82 (ARGUMENTS)
+
+
+State 82
+
+   78 FUNCTION_CALL: IDENTIFIER LEFTPAR $@5 ARGUMENT . RIGHTPAR
+
+    RIGHTPAR  shift, and go to state 105
+
+
+State 83
+
+   79 ARGUMENT: ARGUMENTS .
+   81 ARGUMENTS: ARGUMENTS . COMMA EXPRESSION
+
+    COMMA  shift, and go to state 106
+
+    $default  reduce using rule 79 (ARGUMENT)
+
+
+State 84
+
+   25 PARAMETER_IDS: PARAMETER_IDS COMMA IDENTIFIER .
+
+    $default  reduce using rule 25 (PARAMETER_IDS)
+
+
+State 85
+
+   43 CONDITIONAL: IF . LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE
+   45            | IF . LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE $@4 ELSE leftbrace STATEMENT_LIST RIGHTBRACE
+
+    LEFTPAR  shift, and go to state 107
+
+
+State 86
+
+   46 LOOP: WHILE . LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE
+
+    LEFTPAR  shift, and go to state 108
+
+
+State 87
+
+   47 RETURN_STATEMENT: RETURN . DELIMITER
+   48                 | RETURN . EXPRESSION DELIMITER
+
+    FALSE      shift, and go to state 25
+    TRUE       shift, and go to state 26
+    LEFTPAR    shift, and go to state 27
+    DELIMITER  shift, and go to state 109
+    integer    shift, and go to state 28
+    id         shift, and go to state 14
+    MINUS      shift, and go to state 29
+
+    EXPRESSION         go to state 110
+    SIMPLE_EXPRESSION  go to state 46
+    SUM                go to state 31
+    TERM               go to state 32
+    UNARY_EXPRESSION   go to state 33
+    UNARY_OPERATOR     go to state 34
+    FACTOR             go to state 35
+    L_VALUE            go to state 36
+    FUNCTION_CALL      go to state 37
+    LITERALS           go to state 38
+    IDENTIFIER         go to state 47
+    INTEGERS           go to state 40
+
+
+State 88
+
+   88 leftbrace: LEFTBRACE .
+
+    $default  reduce using rule 88 (leftbrace)
+
+
+State 89
+
+   42 EXP: DELIMITER .
+
+    $default  reduce using rule 42 (EXP)
+
+
+State 90
+
+   38 PRINT_STATEMENT: PRINT . IDENTIFIER
+   39                | PRINT . LITERALS
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+
+    LITERALS    go to state 111
+    IDENTIFIER  go to state 112
+    INTEGERS    go to state 40
+
+
+State 91
+
+   40 READ_STATEMENT: READ . IDENTIFIER
+
+    id  shift, and go to state 14
+
+    IDENTIFIER  go to state 113
+
+
+State 92
+
+   27 STATEMENT: VARIABLE_DEFINITION .
+
+    $default  reduce using rule 27 (STATEMENT)
+
+
+State 93
+
+    7 VARIABLE_DEFINITION: TYPE . VARIABLES DELIMITER
+    8                    | TYPE . error
+
+    error  shift, and go to state 13
+    id     shift, and go to state 14
+
+    VARIABLES            go to state 15
+    VARIABLE_INITIALIZE  go to state 16
+    IDENTIFIER           go to state 23
+
+
+State 94
+
+   17 FUNCTION_DEFINITION: TYPE IDENTIFIER LEFTPAR $@1 PARAMS RIGHTPAR LEFTBRACE STATEMENT_LIST . RIGHTBRACE $@2
+
+    RIGHTBRACE  shift, and go to state 114
+
+
+State 95
+
+   34 STATEMENTS: STATEMENT . STATEMENTS
+   37           | STATEMENT .
+
+    IF         shift, and go to state 85
+    WHILE      shift, and go to state 86
+    RETURN     shift, and go to state 87
+    INT        shift, and go to state 2
+    BOOL       shift, and go to state 3
+    FALSE      shift, and go to state 25
+    TRUE       shift, and go to state 26
+    LEFTPAR    shift, and go to state 27
+    LEFTBRACE  shift, and go to state 88
+    DELIMITER  shift, and go to state 89
+    integer    shift, and go to state 28
+    id         shift, and go to state 14
+    PRINT      shift, and go to state 90
+    READ       shift, and go to state 91
+    MINUS      shift, and go to state 29
+
+    $default  reduce using rule 37 (STATEMENTS)
+
+    VARIABLE_DEFINITION  go to state 92
+    TYPE                 go to state 93
+    STATEMENT            go to state 95
+    STATEMENTS           go to state 115
+    PRINT_STATEMENT      go to state 97
+    READ_STATEMENT       go to state 98
+    EXP                  go to state 99
+    CONDITIONAL          go to state 100
+    LOOP                 go to state 101
+    RETURN_STATEMENT     go to state 102
+    EXPRESSION           go to state 103
+    SIMPLE_EXPRESSION    go to state 46
+    SUM                  go to state 31
+    TERM                 go to state 32
+    UNARY_EXPRESSION     go to state 33
+    UNARY_OPERATOR       go to state 34
+    FACTOR               go to state 35
+    L_VALUE              go to state 36
+    FUNCTION_CALL        go to state 37
+    LITERALS             go to state 38
+    IDENTIFIER           go to state 47
+    INTEGERS             go to state 40
+    leftbrace            go to state 104
+
+
+State 96
+
+   18 STATEMENT_LIST: STATEMENTS .
+
+    $default  reduce using rule 18 (STATEMENT_LIST)
+
+
+State 97
+
+   31 STATEMENT: PRINT_STATEMENT .
+
+    $default  reduce using rule 31 (STATEMENT)
+
+
+State 98
+
+   32 STATEMENT: READ_STATEMENT .
+
+    $default  reduce using rule 32 (STATEMENT)
+
+
+State 99
+
+   28 STATEMENT: EXP .
+
+    $default  reduce using rule 28 (STATEMENT)
+
+
+State 100
+
+   29 STATEMENT: CONDITIONAL .
+
+    $default  reduce using rule 29 (STATEMENT)
+
+
+State 101
+
+   30 STATEMENT: LOOP .
+
+    $default  reduce using rule 30 (STATEMENT)
+
+
+State 102
+
+   33 STATEMENT: RETURN_STATEMENT .
+
+    $default  reduce using rule 33 (STATEMENT)
+
+
+State 103
+
+   41 EXP: EXPRESSION . DELIMITER
+
+    DELIMITER  shift, and go to state 116
+
+
+State 104
+
+   36 STATEMENTS: leftbrace . STATEMENT_LIST RIGHTBRACE $@3 STATEMENTS
+
+    IF         shift, and go to state 85
+    WHILE      shift, and go to state 86
+    RETURN     shift, and go to state 87
+    INT        shift, and go to state 2
+    BOOL       shift, and go to state 3
+    FALSE      shift, and go to state 25
+    TRUE       shift, and go to state 26
+    LEFTPAR    shift, and go to state 27
+    LEFTBRACE  shift, and go to state 88
+    DELIMITER  shift, and go to state 89
+    integer    shift, and go to state 28
+    id         shift, and go to state 14
+    PRINT      shift, and go to state 90
+    READ       shift, and go to state 91
+    MINUS      shift, and go to state 29
+
+    $default  reduce using rule 19 (STATEMENT_LIST)
+
+    VARIABLE_DEFINITION  go to state 92
+    TYPE                 go to state 93
+    STATEMENT_LIST       go to state 117
+    STATEMENT            go to state 95
+    STATEMENTS           go to state 96
+    PRINT_STATEMENT      go to state 97
+    READ_STATEMENT       go to state 98
+    EXP                  go to state 99
+    CONDITIONAL          go to state 100
+    LOOP                 go to state 101
+    RETURN_STATEMENT     go to state 102
+    EXPRESSION           go to state 103
+    SIMPLE_EXPRESSION    go to state 46
+    SUM                  go to state 31
+    TERM                 go to state 32
+    UNARY_EXPRESSION     go to state 33
+    UNARY_OPERATOR       go to state 34
+    FACTOR               go to state 35
+    L_VALUE              go to state 36
+    FUNCTION_CALL        go to state 37
+    LITERALS             go to state 38
+    IDENTIFIER           go to state 47
+    INTEGERS             go to state 40
+    leftbrace            go to state 104
+
+
+State 105
+
+   78 FUNCTION_CALL: IDENTIFIER LEFTPAR $@5 ARGUMENT RIGHTPAR .
+
+    $default  reduce using rule 78 (FUNCTION_CALL)
+
+
+State 106
+
+   81 ARGUMENTS: ARGUMENTS COMMA . EXPRESSION
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    EXPRESSION         go to state 118
+    SIMPLE_EXPRESSION  go to state 46
+    SUM                go to state 31
+    TERM               go to state 32
+    UNARY_EXPRESSION   go to state 33
+    UNARY_OPERATOR     go to state 34
+    FACTOR             go to state 35
+    L_VALUE            go to state 36
+    FUNCTION_CALL      go to state 37
+    LITERALS           go to state 38
+    IDENTIFIER         go to state 47
+    INTEGERS           go to state 40
+
+
+State 107
+
+   43 CONDITIONAL: IF LEFTPAR . SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE
+   45            | IF LEFTPAR . SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE $@4 ELSE leftbrace STATEMENT_LIST RIGHTBRACE
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    SIMPLE_EXPRESSION  go to state 119
+    SUM                go to state 31
+    TERM               go to state 32
+    UNARY_EXPRESSION   go to state 33
+    UNARY_OPERATOR     go to state 34
+    FACTOR             go to state 35
+    L_VALUE            go to state 36
+    FUNCTION_CALL      go to state 37
+    LITERALS           go to state 38
+    IDENTIFIER         go to state 39
+    INTEGERS           go to state 40
+
+
+State 108
+
+   46 LOOP: WHILE LEFTPAR . SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE
+
+    FALSE    shift, and go to state 25
+    TRUE     shift, and go to state 26
+    LEFTPAR  shift, and go to state 27
+    integer  shift, and go to state 28
+    id       shift, and go to state 14
+    MINUS    shift, and go to state 29
+
+    SIMPLE_EXPRESSION  go to state 120
+    SUM                go to state 31
+    TERM               go to state 32
+    UNARY_EXPRESSION   go to state 33
+    UNARY_OPERATOR     go to state 34
+    FACTOR             go to state 35
+    L_VALUE            go to state 36
+    FUNCTION_CALL      go to state 37
+    LITERALS           go to state 38
+    IDENTIFIER         go to state 39
+    INTEGERS           go to state 40
+
+
+State 109
+
+   47 RETURN_STATEMENT: RETURN DELIMITER .
+
+    $default  reduce using rule 47 (RETURN_STATEMENT)
+
+
+State 110
+
+   48 RETURN_STATEMENT: RETURN EXPRESSION . DELIMITER
+
+    DELIMITER  shift, and go to state 121
+
+
+State 111
+
+   39 PRINT_STATEMENT: PRINT LITERALS .
+
+    $default  reduce using rule 39 (PRINT_STATEMENT)
+
+
+State 112
+
+   38 PRINT_STATEMENT: PRINT IDENTIFIER .
+
+    $default  reduce using rule 38 (PRINT_STATEMENT)
+
+
+State 113
+
+   40 READ_STATEMENT: READ IDENTIFIER .
+
+    $default  reduce using rule 40 (READ_STATEMENT)
+
+
+State 114
+
+   17 FUNCTION_DEFINITION: TYPE IDENTIFIER LEFTPAR $@1 PARAMS RIGHTPAR LEFTBRACE STATEMENT_LIST RIGHTBRACE . $@2
+
+    $default  reduce using rule 16 ($@2)
+
+    $@2  go to state 122
+
+
+State 115
+
+   34 STATEMENTS: STATEMENT STATEMENTS .
+
+    $default  reduce using rule 34 (STATEMENTS)
+
+
+State 116
+
+   41 EXP: EXPRESSION DELIMITER .
+
+    $default  reduce using rule 41 (EXP)
+
+
+State 117
+
+   36 STATEMENTS: leftbrace STATEMENT_LIST . RIGHTBRACE $@3 STATEMENTS
+
+    RIGHTBRACE  shift, and go to state 123
+
+
+State 118
+
+   81 ARGUMENTS: ARGUMENTS COMMA EXPRESSION .
+
+    $default  reduce using rule 81 (ARGUMENTS)
+
+
+State 119
+
+   43 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION . RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE
+   45            | IF LEFTPAR SIMPLE_EXPRESSION . RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE $@4 ELSE leftbrace STATEMENT_LIST RIGHTBRACE
+
+    RIGHTPAR  shift, and go to state 124
+
+
+State 120
+
+   46 LOOP: WHILE LEFTPAR SIMPLE_EXPRESSION . RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE
+
+    RIGHTPAR  shift, and go to state 125
+
+
+State 121
+
+   48 RETURN_STATEMENT: RETURN EXPRESSION DELIMITER .
+
+    $default  reduce using rule 48 (RETURN_STATEMENT)
+
+
+State 122
+
+   17 FUNCTION_DEFINITION: TYPE IDENTIFIER LEFTPAR $@1 PARAMS RIGHTPAR LEFTBRACE STATEMENT_LIST RIGHTBRACE $@2 .
+
+    $default  reduce using rule 17 (FUNCTION_DEFINITION)
+
+
+State 123
+
+   36 STATEMENTS: leftbrace STATEMENT_LIST RIGHTBRACE . $@3 STATEMENTS
+
+    $default  reduce using rule 35 ($@3)
+
+    $@3  go to state 126
+
+
+State 124
+
+   43 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR . leftbrace STATEMENT_LIST RIGHTBRACE
+   45            | IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR . leftbrace STATEMENT_LIST RIGHTBRACE $@4 ELSE leftbrace STATEMENT_LIST RIGHTBRACE
+
+    LEFTBRACE  shift, and go to state 88
+
+    leftbrace  go to state 127
+
+
+State 125
+
+   46 LOOP: WHILE LEFTPAR SIMPLE_EXPRESSION RIGHTPAR . leftbrace STATEMENT_LIST RIGHTBRACE
+
+    LEFTBRACE  shift, and go to state 88
+
+    leftbrace  go to state 128
+
+
+State 126
+
+   36 STATEMENTS: leftbrace STATEMENT_LIST RIGHTBRACE $@3 . STATEMENTS
+
+    IF         shift, and go to state 85
+    WHILE      shift, and go to state 86
+    RETURN     shift, and go to state 87
+    INT        shift, and go to state 2
+    BOOL       shift, and go to state 3
+    FALSE      shift, and go to state 25
+    TRUE       shift, and go to state 26
+    LEFTPAR    shift, and go to state 27
+    LEFTBRACE  shift, and go to state 88
+    DELIMITER  shift, and go to state 89
+    integer    shift, and go to state 28
+    id         shift, and go to state 14
+    PRINT      shift, and go to state 90
+    READ       shift, and go to state 91
+    MINUS      shift, and go to state 29
+
+    VARIABLE_DEFINITION  go to state 92
+    TYPE                 go to state 93
+    STATEMENT            go to state 95
+    STATEMENTS           go to state 129
+    PRINT_STATEMENT      go to state 97
+    READ_STATEMENT       go to state 98
+    EXP                  go to state 99
+    CONDITIONAL          go to state 100
+    LOOP                 go to state 101
+    RETURN_STATEMENT     go to state 102
+    EXPRESSION           go to state 103
+    SIMPLE_EXPRESSION    go to state 46
+    SUM                  go to state 31
+    TERM                 go to state 32
+    UNARY_EXPRESSION     go to state 33
+    UNARY_OPERATOR       go to state 34
+    FACTOR               go to state 35
+    L_VALUE              go to state 36
+    FUNCTION_CALL        go to state 37
+    LITERALS             go to state 38
+    IDENTIFIER           go to state 47
+    INTEGERS             go to state 40
+    leftbrace            go to state 104
+
+
+State 127
+
+   43 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace . STATEMENT_LIST RIGHTBRACE
+   45            | IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace . STATEMENT_LIST RIGHTBRACE $@4 ELSE leftbrace STATEMENT_LIST RIGHTBRACE
+
+    IF         shift, and go to state 85
+    WHILE      shift, and go to state 86
+    RETURN     shift, and go to state 87
+    INT        shift, and go to state 2
+    BOOL       shift, and go to state 3
+    FALSE      shift, and go to state 25
+    TRUE       shift, and go to state 26
+    LEFTPAR    shift, and go to state 27
+    LEFTBRACE  shift, and go to state 88
+    DELIMITER  shift, and go to state 89
+    integer    shift, and go to state 28
+    id         shift, and go to state 14
+    PRINT      shift, and go to state 90
+    READ       shift, and go to state 91
+    MINUS      shift, and go to state 29
+
+    $default  reduce using rule 19 (STATEMENT_LIST)
+
+    VARIABLE_DEFINITION  go to state 92
+    TYPE                 go to state 93
+    STATEMENT_LIST       go to state 130
+    STATEMENT            go to state 95
+    STATEMENTS           go to state 96
+    PRINT_STATEMENT      go to state 97
+    READ_STATEMENT       go to state 98
+    EXP                  go to state 99
+    CONDITIONAL          go to state 100
+    LOOP                 go to state 101
+    RETURN_STATEMENT     go to state 102
+    EXPRESSION           go to state 103
+    SIMPLE_EXPRESSION    go to state 46
+    SUM                  go to state 31
+    TERM                 go to state 32
+    UNARY_EXPRESSION     go to state 33
+    UNARY_OPERATOR       go to state 34
+    FACTOR               go to state 35
+    L_VALUE              go to state 36
+    FUNCTION_CALL        go to state 37
+    LITERALS             go to state 38
+    IDENTIFIER           go to state 47
+    INTEGERS             go to state 40
+    leftbrace            go to state 104
+
+
+State 128
+
+   46 LOOP: WHILE LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace . STATEMENT_LIST RIGHTBRACE
+
+    IF         shift, and go to state 85
+    WHILE      shift, and go to state 86
+    RETURN     shift, and go to state 87
+    INT        shift, and go to state 2
+    BOOL       shift, and go to state 3
+    FALSE      shift, and go to state 25
+    TRUE       shift, and go to state 26
+    LEFTPAR    shift, and go to state 27
+    LEFTBRACE  shift, and go to state 88
+    DELIMITER  shift, and go to state 89
+    integer    shift, and go to state 28
+    id         shift, and go to state 14
+    PRINT      shift, and go to state 90
+    READ       shift, and go to state 91
+    MINUS      shift, and go to state 29
+
+    $default  reduce using rule 19 (STATEMENT_LIST)
+
+    VARIABLE_DEFINITION  go to state 92
+    TYPE                 go to state 93
+    STATEMENT_LIST       go to state 131
+    STATEMENT            go to state 95
+    STATEMENTS           go to state 96
+    PRINT_STATEMENT      go to state 97
+    READ_STATEMENT       go to state 98
+    EXP                  go to state 99
+    CONDITIONAL          go to state 100
+    LOOP                 go to state 101
+    RETURN_STATEMENT     go to state 102
+    EXPRESSION           go to state 103
+    SIMPLE_EXPRESSION    go to state 46
+    SUM                  go to state 31
+    TERM                 go to state 32
+    UNARY_EXPRESSION     go to state 33
+    UNARY_OPERATOR       go to state 34
+    FACTOR               go to state 35
+    L_VALUE              go to state 36
+    FUNCTION_CALL        go to state 37
+    LITERALS             go to state 38
+    IDENTIFIER           go to state 47
+    INTEGERS             go to state 40
+    leftbrace            go to state 104
+
+
+State 129
+
+   36 STATEMENTS: leftbrace STATEMENT_LIST RIGHTBRACE $@3 STATEMENTS .
+
+    $default  reduce using rule 36 (STATEMENTS)
+
+
+State 130
+
+   43 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST . RIGHTBRACE
+   45            | IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST . RIGHTBRACE $@4 ELSE leftbrace STATEMENT_LIST RIGHTBRACE
+
+    RIGHTBRACE  shift, and go to state 132
+
+
+State 131
+
+   46 LOOP: WHILE LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST . RIGHTBRACE
+
+    RIGHTBRACE  shift, and go to state 133
+
+
+State 132
+
+   43 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE .
+   45            | IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE . $@4 ELSE leftbrace STATEMENT_LIST RIGHTBRACE
+
+    ELSE      reduce using rule 44 ($@4)
+    $default  reduce using rule 43 (CONDITIONAL)
+
+    $@4  go to state 134
+
+
+State 133
+
+   46 LOOP: WHILE LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE .
+
+    $default  reduce using rule 46 (LOOP)
+
+
+State 134
+
+   45 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE $@4 . ELSE leftbrace STATEMENT_LIST RIGHTBRACE
+
+    ELSE  shift, and go to state 135
+
+
+State 135
+
+   45 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE $@4 ELSE . leftbrace STATEMENT_LIST RIGHTBRACE
+
+    LEFTBRACE  shift, and go to state 88
+
+    leftbrace  go to state 136
+
+
+State 136
+
+   45 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE $@4 ELSE leftbrace . STATEMENT_LIST RIGHTBRACE
+
+    IF         shift, and go to state 85
+    WHILE      shift, and go to state 86
+    RETURN     shift, and go to state 87
+    INT        shift, and go to state 2
+    BOOL       shift, and go to state 3
+    FALSE      shift, and go to state 25
+    TRUE       shift, and go to state 26
+    LEFTPAR    shift, and go to state 27
+    LEFTBRACE  shift, and go to state 88
+    DELIMITER  shift, and go to state 89
+    integer    shift, and go to state 28
+    id         shift, and go to state 14
+    PRINT      shift, and go to state 90
+    READ       shift, and go to state 91
+    MINUS      shift, and go to state 29
+
+    $default  reduce using rule 19 (STATEMENT_LIST)
+
+    VARIABLE_DEFINITION  go to state 92
+    TYPE                 go to state 93
+    STATEMENT_LIST       go to state 137
+    STATEMENT            go to state 95
+    STATEMENTS           go to state 96
+    PRINT_STATEMENT      go to state 97
+    READ_STATEMENT       go to state 98
+    EXP                  go to state 99
+    CONDITIONAL          go to state 100
+    LOOP                 go to state 101
+    RETURN_STATEMENT     go to state 102
+    EXPRESSION           go to state 103
+    SIMPLE_EXPRESSION    go to state 46
+    SUM                  go to state 31
+    TERM                 go to state 32
+    UNARY_EXPRESSION     go to state 33
+    UNARY_OPERATOR       go to state 34
+    FACTOR               go to state 35
+    L_VALUE              go to state 36
+    FUNCTION_CALL        go to state 37
+    LITERALS             go to state 38
+    IDENTIFIER           go to state 47
+    INTEGERS             go to state 40
+    leftbrace            go to state 104
+
+
+State 137
+
+   45 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE $@4 ELSE leftbrace STATEMENT_LIST . RIGHTBRACE
+
+    RIGHTBRACE  shift, and go to state 138
+
+
+State 138
+
+   45 CONDITIONAL: IF LEFTPAR SIMPLE_EXPRESSION RIGHTPAR leftbrace STATEMENT_LIST RIGHTBRACE $@4 ELSE leftbrace STATEMENT_LIST RIGHTBRACE .
+
+    $default  reduce using rule 45 (CONDITIONAL)

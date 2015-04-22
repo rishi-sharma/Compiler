@@ -1,0 +1,709 @@
+Terminals unused in grammar
+
+   UNKNOWN
+
+
+Grammar
+
+    0 $accept: DECS $end
+
+    1 DECS: DECS DEC
+    2     | DEC
+
+    3 IDENTIFIER_LIST: IDENTIFIER_LIST IDENTIFIER
+    4                | /* empty */
+
+    5 DEC: PRINT FACTOR
+    6    | READ FACTOR
+    7    | PARAM IDENTIFIER
+    8    | IF FALSE IDENTIFIER GOTO IDENTIFIER
+    9    | GOTO IDENTIFIER
+   10    | IDENTIFIER ASSIGN EXPR
+   11    | IDENTIFIER COLON
+
+   12 $@1: /* empty */
+
+   13 $@2: /* empty */
+
+   14 DEC: FUNC BEG INTEGER COMMA INTEGER $@1 PARAMX $@2 IDENTIFIER_LIST COMMA DECS FUNC END
+   15    | RETURN FACTOR
+   16    | RETURN NUL
+
+   17 EXPR: FACTOR REL_OP FACTOR
+   18     | FACTOR ARITH_OP FACTOR
+   19     | MINUS FACTOR
+   20     | FACTOR
+   21     | FUNC_CALL
+
+   22 FUNC_CALL: CALL IDENTIFIER COMMA INTEGER
+
+   23 ARITH_OP: PLUS
+   24         | MINUS
+   25         | MULTIPLY
+   26         | DIVISION
+
+   27 REL_OP: LT
+   28       | GT
+   29       | LTE
+   30       | GTE
+   31       | EQ
+   32       | NEQ
+
+   33 FACTOR: IDENTIFIER
+   34       | INTEGER
+
+   35 IDENTIFIER: id
+
+   36 INTEGER: integer
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+ASSIGN (258) 10
+EQ (259) 31
+NEQ (260) 32
+LT (261) 27
+GT (262) 28
+LTE (263) 29
+GTE (264) 30
+PLUS (265) 23
+MINUS (266) 19 24
+MULTIPLY (267) 25
+DIVISION (268) 26
+UNKNOWN (269)
+id (270) 35
+integer (271) 36
+COLON (272) 11
+FUNC (273) 14
+BEG (274) 14
+END (275) 14
+IF (276) 8
+FALSE (277) 8
+GOTO (278) 8 9
+PARAM (279) 7
+CALL (280) 22
+PARAMX (281) 14
+COMMA (282) 14 22
+RETURN (283) 15 16
+PRINT (284) 5
+READ (285) 6
+NUL (286) 16
+
+
+Nonterminals, with rules where they appear
+
+$accept (32)
+    on left: 0
+DECS (33)
+    on left: 1 2, on right: 0 1 14
+IDENTIFIER_LIST (34)
+    on left: 3 4, on right: 3 14
+DEC (35)
+    on left: 5 6 7 8 9 10 11 14 15 16, on right: 1 2
+$@1 (36)
+    on left: 12, on right: 14
+$@2 (37)
+    on left: 13, on right: 14
+EXPR (38)
+    on left: 17 18 19 20 21, on right: 10
+FUNC_CALL (39)
+    on left: 22, on right: 21
+ARITH_OP (40)
+    on left: 23 24 25 26, on right: 18
+REL_OP (41)
+    on left: 27 28 29 30 31 32, on right: 17
+FACTOR (42)
+    on left: 33 34, on right: 5 6 15 17 18 19 20
+IDENTIFIER (43)
+    on left: 35, on right: 3 7 8 9 10 11 22 33
+INTEGER (44)
+    on left: 36, on right: 14 22 34
+
+
+State 0
+
+    0 $accept: . DECS $end
+
+    id      shift, and go to state 1
+    FUNC    shift, and go to state 2
+    IF      shift, and go to state 3
+    GOTO    shift, and go to state 4
+    PARAM   shift, and go to state 5
+    RETURN  shift, and go to state 6
+    PRINT   shift, and go to state 7
+    READ    shift, and go to state 8
+
+    DECS        go to state 9
+    DEC         go to state 10
+    IDENTIFIER  go to state 11
+
+
+State 1
+
+   35 IDENTIFIER: id .
+
+    $default  reduce using rule 35 (IDENTIFIER)
+
+
+State 2
+
+   14 DEC: FUNC . BEG INTEGER COMMA INTEGER $@1 PARAMX $@2 IDENTIFIER_LIST COMMA DECS FUNC END
+
+    BEG  shift, and go to state 12
+
+
+State 3
+
+    8 DEC: IF . FALSE IDENTIFIER GOTO IDENTIFIER
+
+    FALSE  shift, and go to state 13
+
+
+State 4
+
+    9 DEC: GOTO . IDENTIFIER
+
+    id  shift, and go to state 1
+
+    IDENTIFIER  go to state 14
+
+
+State 5
+
+    7 DEC: PARAM . IDENTIFIER
+
+    id  shift, and go to state 1
+
+    IDENTIFIER  go to state 15
+
+
+State 6
+
+   15 DEC: RETURN . FACTOR
+   16    | RETURN . NUL
+
+    id       shift, and go to state 1
+    integer  shift, and go to state 16
+    NUL      shift, and go to state 17
+
+    FACTOR      go to state 18
+    IDENTIFIER  go to state 19
+    INTEGER     go to state 20
+
+
+State 7
+
+    5 DEC: PRINT . FACTOR
+
+    id       shift, and go to state 1
+    integer  shift, and go to state 16
+
+    FACTOR      go to state 21
+    IDENTIFIER  go to state 19
+    INTEGER     go to state 20
+
+
+State 8
+
+    6 DEC: READ . FACTOR
+
+    id       shift, and go to state 1
+    integer  shift, and go to state 16
+
+    FACTOR      go to state 22
+    IDENTIFIER  go to state 19
+    INTEGER     go to state 20
+
+
+State 9
+
+    0 $accept: DECS . $end
+    1 DECS: DECS . DEC
+
+    $end    shift, and go to state 23
+    id      shift, and go to state 1
+    FUNC    shift, and go to state 2
+    IF      shift, and go to state 3
+    GOTO    shift, and go to state 4
+    PARAM   shift, and go to state 5
+    RETURN  shift, and go to state 6
+    PRINT   shift, and go to state 7
+    READ    shift, and go to state 8
+
+    DEC         go to state 24
+    IDENTIFIER  go to state 11
+
+
+State 10
+
+    2 DECS: DEC .
+
+    $default  reduce using rule 2 (DECS)
+
+
+State 11
+
+   10 DEC: IDENTIFIER . ASSIGN EXPR
+   11    | IDENTIFIER . COLON
+
+    ASSIGN  shift, and go to state 25
+    COLON   shift, and go to state 26
+
+
+State 12
+
+   14 DEC: FUNC BEG . INTEGER COMMA INTEGER $@1 PARAMX $@2 IDENTIFIER_LIST COMMA DECS FUNC END
+
+    integer  shift, and go to state 16
+
+    INTEGER  go to state 27
+
+
+State 13
+
+    8 DEC: IF FALSE . IDENTIFIER GOTO IDENTIFIER
+
+    id  shift, and go to state 1
+
+    IDENTIFIER  go to state 28
+
+
+State 14
+
+    9 DEC: GOTO IDENTIFIER .
+
+    $default  reduce using rule 9 (DEC)
+
+
+State 15
+
+    7 DEC: PARAM IDENTIFIER .
+
+    $default  reduce using rule 7 (DEC)
+
+
+State 16
+
+   36 INTEGER: integer .
+
+    $default  reduce using rule 36 (INTEGER)
+
+
+State 17
+
+   16 DEC: RETURN NUL .
+
+    $default  reduce using rule 16 (DEC)
+
+
+State 18
+
+   15 DEC: RETURN FACTOR .
+
+    $default  reduce using rule 15 (DEC)
+
+
+State 19
+
+   33 FACTOR: IDENTIFIER .
+
+    $default  reduce using rule 33 (FACTOR)
+
+
+State 20
+
+   34 FACTOR: INTEGER .
+
+    $default  reduce using rule 34 (FACTOR)
+
+
+State 21
+
+    5 DEC: PRINT FACTOR .
+
+    $default  reduce using rule 5 (DEC)
+
+
+State 22
+
+    6 DEC: READ FACTOR .
+
+    $default  reduce using rule 6 (DEC)
+
+
+State 23
+
+    0 $accept: DECS $end .
+
+    $default  accept
+
+
+State 24
+
+    1 DECS: DECS DEC .
+
+    $default  reduce using rule 1 (DECS)
+
+
+State 25
+
+   10 DEC: IDENTIFIER ASSIGN . EXPR
+
+    MINUS    shift, and go to state 29
+    id       shift, and go to state 1
+    integer  shift, and go to state 16
+    CALL     shift, and go to state 30
+
+    EXPR        go to state 31
+    FUNC_CALL   go to state 32
+    FACTOR      go to state 33
+    IDENTIFIER  go to state 19
+    INTEGER     go to state 20
+
+
+State 26
+
+   11 DEC: IDENTIFIER COLON .
+
+    $default  reduce using rule 11 (DEC)
+
+
+State 27
+
+   14 DEC: FUNC BEG INTEGER . COMMA INTEGER $@1 PARAMX $@2 IDENTIFIER_LIST COMMA DECS FUNC END
+
+    COMMA  shift, and go to state 34
+
+
+State 28
+
+    8 DEC: IF FALSE IDENTIFIER . GOTO IDENTIFIER
+
+    GOTO  shift, and go to state 35
+
+
+State 29
+
+   19 EXPR: MINUS . FACTOR
+
+    id       shift, and go to state 1
+    integer  shift, and go to state 16
+
+    FACTOR      go to state 36
+    IDENTIFIER  go to state 19
+    INTEGER     go to state 20
+
+
+State 30
+
+   22 FUNC_CALL: CALL . IDENTIFIER COMMA INTEGER
+
+    id  shift, and go to state 1
+
+    IDENTIFIER  go to state 37
+
+
+State 31
+
+   10 DEC: IDENTIFIER ASSIGN EXPR .
+
+    $default  reduce using rule 10 (DEC)
+
+
+State 32
+
+   21 EXPR: FUNC_CALL .
+
+    $default  reduce using rule 21 (EXPR)
+
+
+State 33
+
+   17 EXPR: FACTOR . REL_OP FACTOR
+   18     | FACTOR . ARITH_OP FACTOR
+   20     | FACTOR .
+
+    EQ        shift, and go to state 38
+    NEQ       shift, and go to state 39
+    LT        shift, and go to state 40
+    GT        shift, and go to state 41
+    LTE       shift, and go to state 42
+    GTE       shift, and go to state 43
+    PLUS      shift, and go to state 44
+    MINUS     shift, and go to state 45
+    MULTIPLY  shift, and go to state 46
+    DIVISION  shift, and go to state 47
+
+    $default  reduce using rule 20 (EXPR)
+
+    ARITH_OP  go to state 48
+    REL_OP    go to state 49
+
+
+State 34
+
+   14 DEC: FUNC BEG INTEGER COMMA . INTEGER $@1 PARAMX $@2 IDENTIFIER_LIST COMMA DECS FUNC END
+
+    integer  shift, and go to state 16
+
+    INTEGER  go to state 50
+
+
+State 35
+
+    8 DEC: IF FALSE IDENTIFIER GOTO . IDENTIFIER
+
+    id  shift, and go to state 1
+
+    IDENTIFIER  go to state 51
+
+
+State 36
+
+   19 EXPR: MINUS FACTOR .
+
+    $default  reduce using rule 19 (EXPR)
+
+
+State 37
+
+   22 FUNC_CALL: CALL IDENTIFIER . COMMA INTEGER
+
+    COMMA  shift, and go to state 52
+
+
+State 38
+
+   31 REL_OP: EQ .
+
+    $default  reduce using rule 31 (REL_OP)
+
+
+State 39
+
+   32 REL_OP: NEQ .
+
+    $default  reduce using rule 32 (REL_OP)
+
+
+State 40
+
+   27 REL_OP: LT .
+
+    $default  reduce using rule 27 (REL_OP)
+
+
+State 41
+
+   28 REL_OP: GT .
+
+    $default  reduce using rule 28 (REL_OP)
+
+
+State 42
+
+   29 REL_OP: LTE .
+
+    $default  reduce using rule 29 (REL_OP)
+
+
+State 43
+
+   30 REL_OP: GTE .
+
+    $default  reduce using rule 30 (REL_OP)
+
+
+State 44
+
+   23 ARITH_OP: PLUS .
+
+    $default  reduce using rule 23 (ARITH_OP)
+
+
+State 45
+
+   24 ARITH_OP: MINUS .
+
+    $default  reduce using rule 24 (ARITH_OP)
+
+
+State 46
+
+   25 ARITH_OP: MULTIPLY .
+
+    $default  reduce using rule 25 (ARITH_OP)
+
+
+State 47
+
+   26 ARITH_OP: DIVISION .
+
+    $default  reduce using rule 26 (ARITH_OP)
+
+
+State 48
+
+   18 EXPR: FACTOR ARITH_OP . FACTOR
+
+    id       shift, and go to state 1
+    integer  shift, and go to state 16
+
+    FACTOR      go to state 53
+    IDENTIFIER  go to state 19
+    INTEGER     go to state 20
+
+
+State 49
+
+   17 EXPR: FACTOR REL_OP . FACTOR
+
+    id       shift, and go to state 1
+    integer  shift, and go to state 16
+
+    FACTOR      go to state 54
+    IDENTIFIER  go to state 19
+    INTEGER     go to state 20
+
+
+State 50
+
+   14 DEC: FUNC BEG INTEGER COMMA INTEGER . $@1 PARAMX $@2 IDENTIFIER_LIST COMMA DECS FUNC END
+
+    $default  reduce using rule 12 ($@1)
+
+    $@1  go to state 55
+
+
+State 51
+
+    8 DEC: IF FALSE IDENTIFIER GOTO IDENTIFIER .
+
+    $default  reduce using rule 8 (DEC)
+
+
+State 52
+
+   22 FUNC_CALL: CALL IDENTIFIER COMMA . INTEGER
+
+    integer  shift, and go to state 16
+
+    INTEGER  go to state 56
+
+
+State 53
+
+   18 EXPR: FACTOR ARITH_OP FACTOR .
+
+    $default  reduce using rule 18 (EXPR)
+
+
+State 54
+
+   17 EXPR: FACTOR REL_OP FACTOR .
+
+    $default  reduce using rule 17 (EXPR)
+
+
+State 55
+
+   14 DEC: FUNC BEG INTEGER COMMA INTEGER $@1 . PARAMX $@2 IDENTIFIER_LIST COMMA DECS FUNC END
+
+    PARAMX  shift, and go to state 57
+
+
+State 56
+
+   22 FUNC_CALL: CALL IDENTIFIER COMMA INTEGER .
+
+    $default  reduce using rule 22 (FUNC_CALL)
+
+
+State 57
+
+   14 DEC: FUNC BEG INTEGER COMMA INTEGER $@1 PARAMX . $@2 IDENTIFIER_LIST COMMA DECS FUNC END
+
+    $default  reduce using rule 13 ($@2)
+
+    $@2  go to state 58
+
+
+State 58
+
+   14 DEC: FUNC BEG INTEGER COMMA INTEGER $@1 PARAMX $@2 . IDENTIFIER_LIST COMMA DECS FUNC END
+
+    $default  reduce using rule 4 (IDENTIFIER_LIST)
+
+    IDENTIFIER_LIST  go to state 59
+
+
+State 59
+
+    3 IDENTIFIER_LIST: IDENTIFIER_LIST . IDENTIFIER
+   14 DEC: FUNC BEG INTEGER COMMA INTEGER $@1 PARAMX $@2 IDENTIFIER_LIST . COMMA DECS FUNC END
+
+    id     shift, and go to state 1
+    COMMA  shift, and go to state 60
+
+    IDENTIFIER  go to state 61
+
+
+State 60
+
+   14 DEC: FUNC BEG INTEGER COMMA INTEGER $@1 PARAMX $@2 IDENTIFIER_LIST COMMA . DECS FUNC END
+
+    id      shift, and go to state 1
+    FUNC    shift, and go to state 2
+    IF      shift, and go to state 3
+    GOTO    shift, and go to state 4
+    PARAM   shift, and go to state 5
+    RETURN  shift, and go to state 6
+    PRINT   shift, and go to state 7
+    READ    shift, and go to state 8
+
+    DECS        go to state 62
+    DEC         go to state 10
+    IDENTIFIER  go to state 11
+
+
+State 61
+
+    3 IDENTIFIER_LIST: IDENTIFIER_LIST IDENTIFIER .
+
+    $default  reduce using rule 3 (IDENTIFIER_LIST)
+
+
+State 62
+
+    1 DECS: DECS . DEC
+   14 DEC: FUNC BEG INTEGER COMMA INTEGER $@1 PARAMX $@2 IDENTIFIER_LIST COMMA DECS . FUNC END
+
+    id      shift, and go to state 1
+    FUNC    shift, and go to state 63
+    IF      shift, and go to state 3
+    GOTO    shift, and go to state 4
+    PARAM   shift, and go to state 5
+    RETURN  shift, and go to state 6
+    PRINT   shift, and go to state 7
+    READ    shift, and go to state 8
+
+    DEC         go to state 24
+    IDENTIFIER  go to state 11
+
+
+State 63
+
+   14 DEC: FUNC . BEG INTEGER COMMA INTEGER $@1 PARAMX $@2 IDENTIFIER_LIST COMMA DECS FUNC END
+   14    | FUNC BEG INTEGER COMMA INTEGER $@1 PARAMX $@2 IDENTIFIER_LIST COMMA DECS FUNC . END
+
+    BEG  shift, and go to state 12
+    END  shift, and go to state 64
+
+
+State 64
+
+   14 DEC: FUNC BEG INTEGER COMMA INTEGER $@1 PARAMX $@2 IDENTIFIER_LIST COMMA DECS FUNC END .
+
+    $default  reduce using rule 14 (DEC)

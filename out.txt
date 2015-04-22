@@ -1,0 +1,49 @@
+i1=11
+gcd:
+func begin 56,2
+paramx a2 b2 ,
+r0=a2==0
+if FALSE r0 goto label0
+return b2
+label0:
+r3=b2/a2
+r2= -r3
+r1=r2*a2
+temp2=r1
+r5=b2+temp2
+param r5
+r6=a2
+param r6
+r4 = call gcd,2
+return r4
+func end
+main:
+func begin 64,2
+paramx ,
+print i1
+i2=10
+label2:
+r7=i2>0
+if FALSE r7 goto label3
+read a2
+read b2
+r9=a2
+param r9
+r10=b2
+param r10
+r8 = call gcd,2
+k3=r8
+print k3
+i2=i2-1
+goto label2
+label3:
+r11=i2==0
+if FALSE r11 goto label5
+r12=1
+return r12
+goto label4
+label5:
+r13=0
+return r13
+label4:
+func end
